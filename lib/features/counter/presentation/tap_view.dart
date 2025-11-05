@@ -9,9 +9,10 @@ class TapView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Faster Finger')),
       body: GestureDetector(
-        onTap: () => context.read<TapCubit>().onTap,
+        onTap: () => context.read<TapCubit>().onTap(),
         child: SizedBox.expand(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BlocBuilder<TapCubit, int>(
                 builder: (context, state) => Text(
@@ -19,9 +20,11 @@ class TapView extends StatelessWidget {
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
-              Text(
-                'Keep tapping as You can',
-                style: Theme.of(context).textTheme.displayMedium,
+              Center(
+                child: Text(
+                  'Keep tapping as You can',
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
               ),
             ],
           ),
