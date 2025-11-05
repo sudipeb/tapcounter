@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
+import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
 
 class TapView extends StatelessWidget {
   const TapView({super.key});
@@ -32,6 +33,9 @@ class TapView extends StatelessWidget {
                   'Keep tapping as You can',
                   style: decoration.displayMedium,
                 ),
+              ),
+              BlocBuilder<TimerCubit, int>(
+                builder: (context, state) => Text('$state'),
               ),
             ],
           ),
