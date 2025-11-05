@@ -6,7 +6,7 @@ import 'package:tapcounter/core/app_theme.dart';
 import 'package:tapcounter/features/counter/cubit/nav_bar_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
-import 'package:tapcounter/features/counter/models/tap_session_model.dart';
+import 'package:tapcounter/features/counter/data/models/tap_session_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
