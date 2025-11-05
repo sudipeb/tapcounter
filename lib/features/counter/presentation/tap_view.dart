@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
@@ -5,8 +6,9 @@ import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
 
 import 'package:tapcounter/features/widgets/bottom_nav_bar.dart';
 
-class TapView extends StatelessWidget {
-  const TapView({super.key});
+@RoutePage()
+class TapViewPage extends StatelessWidget {
+  const TapViewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
