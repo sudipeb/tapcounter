@@ -35,7 +35,19 @@ class TapView extends StatelessWidget {
                 ),
               ),
               BlocBuilder<TimerCubit, int>(
-                builder: (context, state) => Text('$state'),
+                bloc: context.read<TimerCubit>(),
+                builder: (context, state) {
+                  return Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.play_arrow),
+                        onPressed: () =>
+                            context.read<TimerCubit>().startTimer(),
+                      ),
+                      Text('$state'),
+                    ],
+                  );
+                },
               ),
             ],
           ),
