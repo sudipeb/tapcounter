@@ -10,3 +10,17 @@ class TapCubit extends Cubit<int> {
     debugPrint('Tapped! Current value: ${state + 1}');
   }
 }
+
+class ToggleCubit extends Cubit<ThemeMode> {
+  ToggleCubit() : super(ThemeMode.system);
+
+  void toggleTheme() {
+    if (state == ThemeMode.system) {
+      emit(ThemeMode.light);
+    } else if (state == ThemeMode.light) {
+      emit(ThemeMode.dark);
+    } else {
+      emit(ThemeMode.system);
+    }
+  }
+}
