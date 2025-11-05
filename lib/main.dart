@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tapcounter/core/app_theme.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
+import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
 import 'package:tapcounter/features/counter/presentation/tap_view.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => TapCubit()),
         BlocProvider(create: (_) => ToggleCubit()),
+        BlocProvider(create: (_) => TimerCubit()),
       ],
       child: BlocBuilder<ToggleCubit, ThemeMode>(
         builder: (context, thememode) {
