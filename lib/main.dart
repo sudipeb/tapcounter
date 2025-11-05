@@ -19,12 +19,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ToggleCubit()),
       ],
       child: BlocBuilder<ToggleCubit, ThemeMode>(
-        builder: (context, state) {
+        builder: (context, thememode) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: lightTheme,
             darkTheme: darkTheme,
-            themeMode: ThemeMode.system,
+            themeMode: thememode,
             home: const TapView(),
           );
         },
