@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tapcounter/core/app_theme.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
-import 'package:tapcounter/features/counter/presentation/tap_page.dart';
 import 'package:tapcounter/features/counter/presentation/tap_view.dart';
 
 void main() {
