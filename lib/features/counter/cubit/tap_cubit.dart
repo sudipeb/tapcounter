@@ -7,7 +7,7 @@ class TapCubit extends Cubit<int> {
   //for each new taps on the screen increments the value
   void onTap() {
     emit(state + 1);
-    debugPrint('Tapped! Current value: ${state + 1}');
+    debugPrint('Tapped! Current value: $state');
   }
 }
 
