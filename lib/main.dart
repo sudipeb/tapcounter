@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final _appRouter = AppRouter();
+    final appRouter = AppRouter();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => NavBarCubit()),
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: thememode,
-            routerConfig: _appRouter.config(),
+            routerConfig: appRouter.config(),
           );
         },
       ),
