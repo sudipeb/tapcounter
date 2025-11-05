@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///Custom light and dark theme using[lightTheme] and [darkTheme]
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Colors.black,
