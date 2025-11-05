@@ -8,6 +8,7 @@ class TapView extends StatelessWidget {
   @override
   Widget build(context) {
     final decoration = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Faster Finger', style: decoration.displayMedium),
@@ -19,7 +20,12 @@ class TapView extends StatelessWidget {
         ],
       ),
       body: GestureDetector(
-        onTap: () => context.read<TapCubit>().onTap(),
+        onTap: () {
+          final timerState = context.read<TimerCubit>().state;
+          if (timerState > 0) {
+            context.read<TapCubit>().onTap();
+          }
+        },
         child: SizedBox.expand(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
