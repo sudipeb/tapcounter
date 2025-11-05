@@ -6,7 +6,7 @@ class TimerCubit extends Cubit<int> {
   Timer? _timer;
   TimerCubit() : super(30);
   void startTimer() {
-  _timer?.cancel(); // cancel previous timer if any
+    _timer?.cancel(); // cancel previous timer if any
     emit(30);
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (state > 0) {
