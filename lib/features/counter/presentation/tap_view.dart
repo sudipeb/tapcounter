@@ -72,7 +72,7 @@ class TapViewPage extends StatelessWidget {
             ),
 
             // Bottom navigation bar stays fixed at bottom
-            const SizedBox(height: 56, child: BottomNavBar()),
+            SizedBox(height: 56, child: BottomNavBar()),
           ],
         ),
       ),
