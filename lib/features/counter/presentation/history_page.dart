@@ -12,7 +12,6 @@ class HistoryPage extends StatelessWidget {
         separatorBuilder: separatorBuilder,
         itemCount: itemCount,
       ),
-      
     );
   }
 }
