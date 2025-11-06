@@ -1,11 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:tapcounter/app_route.gr.dart';
 import 'package:tapcounter/features/counter/cubit/nav_bar_cubit.dart';
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
-
+  BottomNavBar({super.key});
+  final PersistentTabController _controller = PersistentTabController(
+    initialIndex: 0,
+  );
   List<Widget> _buildScreen() {
     return [
       Center(child: Text('Home')),
@@ -38,13 +42,27 @@ class BottomNavBar extends StatelessWidget {
   Widget build(context) {
     return BlocBuilder<NavBarCubit, int>(
       builder: (context, selectedIndex) {
+        if (_controller.index != selectedIndex) {
+          _controller.index = selectedIndex;
+        }
         return PersistentTabView(
           context,
-          controller: PersistentTabController(initialIndex: selectedIndex),
+
           screens: _buildScreen(),
           items: _navBarsItem(),
           onItemSelected: (index) {
             context.read<NavBarCubit>().setIndex(index);
+            switch (index) {
+              case 0:
+                context.router.replace(TapViewRoute());
+                break;
+              case 1:
+                context.router.replace(HistoryRoute());
+                break;
+              case 2:
+                context.router.replace(SettingsRoute());
+                break;
+            }
           },
           navBarStyle: NavBarStyle.style6,
         );
