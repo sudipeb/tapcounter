@@ -8,16 +8,16 @@ import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
 import 'package:tapcounter/features/counter/data/models/tap_session_model.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Hive.initFlutter();
+  await Hive.initFlutter();
 
   // Register the manual TypeAdapter
   Hive.registerAdapter(TapSessionAdapter());
 
   // Open the box
-  Hive.openBox<TapSession>('tap_sessions');
+  await Hive.openBox<TapSession>('tap_sessions');
   runApp(const MyApp());
 }
 
