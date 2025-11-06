@@ -16,6 +16,7 @@ class TapViewPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Faster Finger', style: decoration.displayMedium),
         actions: [
           IconButton(
@@ -29,49 +30,65 @@ class TapViewPage extends StatelessWidget {
           children: [
             // Tap area takes remaining space
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  final timerState = context.read<TimerCubit>().state;
-                  if (timerState > 0) {
-                    context.read<TapCubit>().onTap();
+              child: BlocListener<TimerCubit, int>(
+                listener: (context, timer) {
+                  if (timer == 0 && context.read<TapCubit>().state > 0) {
+                    final originalTime = context
+                        .read<TimerCubit>()
+                        .originalTime;
+                    context.read<TapCubit>().saveSession(originalTime);
                   }
                 },
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BlocBuilder<TapCubit, int>(
-                        builder: (context, state) =>
-                            Text('$state', style: decoration.displayLarge),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Keep tapping as you can',
-                        style: decoration.displayMedium,
-                      ),
-                      const SizedBox(height: 16),
-                      BlocBuilder<TimerCubit, int>(
-                        builder: (context, state) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.play_arrow),
-                                onPressed: () =>
-                                    context.read<TimerCubit>().startTimer(),
-                              ),
-                              Text('$state'),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                child: GestureDetector(
+                  onTap: () {
+                    final timerCubit = context.read<TimerCubit>();
+                    if (timerCubit.isRunning && timerCubit.state > 0) {
+                      context.read<TapCubit>().onTap();
+                    }
+                  },
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BlocBuilder<TapCubit, int>(
+                          builder: (context, state) =>
+                              Text('$state', style: decoration.displayLarge),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Keep tapping as you can',
+                          style: decoration.displayMedium,
+                        ),
+                        const SizedBox(height: 16),
+                        BlocBuilder<TimerCubit, int>(
+                          builder: (context, state) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.play_arrow),
+                                  onPressed: () {
+                                    final timerCubit = context
+                                        .read<TimerCubit>();
+                                    final tapCubit = context.read<TapCubit>();
+
+                                    tapCubit.resetTaps();
+                                    timerCubit.startTimer();
+                                  },
+                                ),
+                                Text('$state'),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // Bottom navigation bar stays fixed at bottom
+              // Bottom navigation bar stays fixed at bottom
+            ),
             SizedBox(height: 56, child: BottomNavBar()),
           ],
         ),

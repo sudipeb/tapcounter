@@ -27,12 +27,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(context) {
     final appRouter = AppRouter();
+    final timerCubit = TimerCubit(initialTime: 30);
+    final tapCubit = TapCubit(timerCubit: timerCubit);
+
+    // connect the two cubits
+    timerCubit.onTimerEnd = () => tapCubit.saveSession(timerCubit.originalTime);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => NavBarCubit()),
-        BlocProvider(create: (_) => TapCubit()),
+        BlocProvider(
+          create: (_) => TapCubit(timerCubit: TimerCubit(initialTime: 30)),
+        ),
         BlocProvider(create: (_) => ToggleCubit()),
-        BlocProvider(create: (_) => TimerCubit()),
+        BlocProvider(create: (_) => TimerCubit(initialTime: 30)),
       ],
       child: BlocBuilder<ToggleCubit, ThemeMode>(
         builder: (context, thememode) {
