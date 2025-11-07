@@ -13,14 +13,18 @@ class TapViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final decoration = Theme.of(context).textTheme;
-
+    final toggleButton = context.watch<ToggleCubit>().state;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text('Faster Finger', style: decoration.displayMedium),
         actions: [
           IconButton(
-            icon: Icon(Icons.toggle_on),
+            icon: Icon(
+              toggleButton == ThemeMode.dark
+                  ? Icons.toggle_off
+                  : Icons.toggle_on,
+            ),
             onPressed: () => context.read<ToggleCubit>().toggleTheme(),
           ),
         ],
