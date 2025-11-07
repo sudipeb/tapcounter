@@ -60,7 +60,7 @@ class BottomNavBar extends StatelessWidget {
                 context.router.replace(HistoryRoute());
                 break;
               case 2:
-                context.router.replace(SettingsRoute());
+                context.router.push(SettingsRoute());
                 break;
             }
           },
