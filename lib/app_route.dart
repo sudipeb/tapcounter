@@ -5,6 +5,7 @@ import 'package:tapcounter/app_route.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
+    AutoRoute(page: UserInputRoute.page),
     AutoRoute(page: TapViewRoute.page, initial: true),
     AutoRoute(page: HistoryRoute.page),
     AutoRoute(page: SettingsRoute.page),
