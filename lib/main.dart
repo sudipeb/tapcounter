@@ -8,6 +8,7 @@ import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
 import 'package:tapcounter/features/counter/data/models/tap_session_model.dart';
 import 'package:tapcounter/features/userprofile/data/models/user_model.dart';
+import 'package:tapcounter/features/userprofile/data/presentation/cubit/user_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ void main() async {
   Hive.registerAdapter(TapSessionAdapter());
   await Hive.openBox<TapSession>('tap_sessions');
   Hive.registerAdapter(UserAdapter());
-  await Hive.openBox<TapSession>('user_profile');
+  await Hive.openBox<User>('user_profile');
   runApp(const MyApp());
 }
 
@@ -36,11 +37,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => NavBarCubit()),
-        BlocProvider(
-          create: (_) => TapCubit(timerCubit: TimerCubit(initialTime: 30)),
-        ),
+        BlocProvider.value(value: tapCubit), // reuse the same instance
         BlocProvider(create: (_) => ToggleCubit()),
-        BlocProvider(create: (_) => TimerCubit(initialTime: 30)),
+        BlocProvider.value(value: timerCubit), // reuse the same instance
+        BlocProvider(create: (_) => UserCubit()),
+        BlocProvider(create: (_) => UserCubit()),
       ],
       child: BlocBuilder<ToggleCubit, ThemeMode>(
         builder: (context, thememode) {
