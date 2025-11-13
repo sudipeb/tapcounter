@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tapcounter/app_route.dart';
 import 'package:tapcounter/core/app_theme.dart';
+import 'package:tapcounter/core/device_info.dart';
 import 'package:tapcounter/features/counter/cubit/nav_bar_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
@@ -14,13 +15,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
+  WidgetsFlutterBinding.ensureInitialized();
 
   // Register the manual TypeAdapter
   Hive.registerAdapter(TapSessionAdapter());
   await Hive.openBox<TapSession>('tap_sessions');
   Hive.registerAdapter(UserAdapter());
   await Hive.openBox<User>('user_profile');
-  runApp(const MyApp());
+  await Hive.openBox('deviceSettings');
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
