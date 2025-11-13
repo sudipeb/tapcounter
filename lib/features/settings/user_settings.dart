@@ -24,13 +24,6 @@ class SettingsPage extends StatelessWidget {
           debugPrint('File not found at path: ${user.imageUrl}');
         }
 
-        // FileImage? fileImage;
-        // if (user.imageUrl.isNotEmpty) {
-        //   final file = File(user.imageUrl);
-        //   if (file.existsSync()) {
-        //     fileImage = FileImage(file);
-        //   }
-        // }
         return Scaffold(
           appBar: AppBar(title: Text('User Profile Settings')),
           body: Column(

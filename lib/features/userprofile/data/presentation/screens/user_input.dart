@@ -89,12 +89,11 @@ class UserInputPage extends StatelessWidget {
                 debugPrint(
                   'File exists? ${File(_imageController.text).existsSync()}',
                 );
-
+                context.router.push(TapViewRoute());
                 context.read<UserCubit>().createUser(user);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('User data submitted!')),
                 );
-                context.router.push(SettingsRoute());
               },
               child: const Text('Submit'),
             ),

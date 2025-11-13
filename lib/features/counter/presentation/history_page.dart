@@ -4,7 +4,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:tapcounter/app_route.gr.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/data/models/tap_session_model.dart';
-import 'package:tapcounter/features/userprofile/data/models/user_model.dart';
 
 @RoutePage()
 class HistoryPage extends StatelessWidget {
@@ -12,12 +11,6 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(context) {
-    Future<void> clearUserBox() async {
-      final box = Hive.box<User>('user_profile');
-      await box.clear(); // removes all saved users
-      print('User box cleared');
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Performance History'),
@@ -30,7 +23,6 @@ class HistoryPage extends StatelessWidget {
             icon: Icon(Icons.delete),
             onPressed: () {
               deleteSession();
-              clearUserBox();
             },
           ),
         ],
