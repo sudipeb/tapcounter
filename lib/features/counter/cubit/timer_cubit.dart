@@ -14,7 +14,7 @@ class TimerCubit extends Cubit<int> {
     emit(initialTime);
     isRunning = true;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (state >= 1) {
+      if (state > 0) {
         emit(state - 1);
       } else {
         emit(state);

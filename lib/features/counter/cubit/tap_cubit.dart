@@ -8,6 +8,8 @@ import 'package:tapcounter/features/counter/data/models/tap_session_model.dart';
 class TapCubit extends Cubit<int> {
   TapCubit({required this.timerCubit}) : super(0);
   final TimerCubit timerCubit;
+  bool _sessionSaved = false;
+
   //for each new taps on the screen increments the value
   void onTap() {
     emit(state + 1);
@@ -15,11 +17,14 @@ class TapCubit extends Cubit<int> {
   }
 
   void resetTaps() {
+    _sessionSaved = false;
     emit(0);
   }
 
   Future<void> saveSession(int totalTime) async {
     // final box = Hive.box<TapSession>('tap_sessions');
+    if (_sessionSaved || state == 0) return; // Prevent double save
+    _sessionSaved = true;
     final original = timerCubit.originalTime;
     final session = TapSession(
       totalTaps: state,
