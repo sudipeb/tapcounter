@@ -26,54 +26,57 @@ class SettingsPage extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(title: Text('User Profile Settings')),
-          body: Column(
-            children: [
-              CircleAvatar(
-                radius: 60,
-                backgroundImage: File(user.imageUrl).existsSync()
-                    ? FileImage(File(user.imageUrl))
-                    : null,
-                child: !File(user.imageUrl).existsSync()
-                    ? const Icon(Icons.person, size: 60)
-                    : null,
-              ),
-              Card(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+          body: Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: File(user.imageUrl).existsSync()
+                      ? FileImage(File(user.imageUrl))
+                      : null,
+                  child: !File(user.imageUrl).existsSync()
+                      ? const Icon(Icons.person, size: 60)
+                      : null,
                 ),
-                elevation: 4,
-                child: ListTile(
-                  title: Text('Name'),
-                  subtitle: Text(user.name),
-                  leading: const Icon(Icons.person),
+                Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                  child: ListTile(
+                    title: Text('Name'),
+                    subtitle: Text(user.name),
+                    leading: const Icon(Icons.person),
+                  ),
                 ),
-              ),
-              Card(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                  child: ListTile(
+                    title: Text('Email'),
+                    subtitle: Text(user.email),
+                    leading: const Icon(Icons.email),
+                  ),
                 ),
-                elevation: 4,
-                child: ListTile(
-                  title: Text('Email'),
-                  subtitle: Text(user.email),
-                  leading: const Icon(Icons.email),
+                Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                  child: ListTile(
+                    title: Text('Age'),
+                    subtitle: Text(user.age.toString()),
+                    leading: const Icon(Icons.cake),
+                  ),
                 ),
-              ),
-              Card(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                elevation: 4,
-                child: ListTile(
-                  title: Text('Age'),
-                  subtitle: Text(user.age.toString()),
-                  leading: const Icon(Icons.cake),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
