@@ -150,7 +150,10 @@ class _TapViewPageState extends State<TapViewPage>
                                         child: child,
                                       ),
                                   child: sessionCompleted == true
-                                      ? Text('Your Score: $taps')
+                                      ? Text(
+                                          'Your Score: $taps',
+                                          style: textTheme.displayLarge,
+                                        )
                                       : Text(
                                           '$taps',
                                           key: ValueKey<int>(taps),
@@ -215,21 +218,24 @@ class _TapViewPageState extends State<TapViewPage>
           // Countdown overlay
           BlocBuilder<CountdownCubit, int?>(
             builder: (context, countdown) {
-              if (countdown == null || countdown <= 0)
+              if (countdown == null || countdown <= 0) {
                 return const SizedBox.shrink();
-              return Container(
-                color: Colors.black.withOpacity(0.7),
-                child: Center(
-                  child: Text(
-                    '$countdown',
-                    style: textTheme.displayLarge?.copyWith(
-                      color: Colors.white,
-                      fontSize: 80,
-                      fontWeight: FontWeight.bold,
+              }
+              {
+                return Container(
+                  color: Colors.black.withValues(alpha: 0.7),
+                  child: Center(
+                    child: Text(
+                      '$countdown',
+                      style: textTheme.displayLarge?.copyWith(
+                        color: Colors.white,
+                        fontSize: 80,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              );
+                );
+              }
             },
           ),
 
