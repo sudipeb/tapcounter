@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:confetti/confetti.dart';
+import 'package:tapcounter/features/counter/cubit/count_down.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
 
@@ -22,6 +23,7 @@ class _TapViewPageState extends State<TapViewPage>
   @override
   void initState() {
     super.initState();
+
     _tapAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 100),
@@ -29,6 +31,7 @@ class _TapViewPageState extends State<TapViewPage>
       upperBound: 1.2,
     );
     _tapAnimation = _tapAnimationController.drive(Tween(begin: 1.0, end: 1.2));
+
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 1),
     );
@@ -42,24 +45,24 @@ class _TapViewPageState extends State<TapViewPage>
   }
 
   void _handleTap() {
+    final countdownCubit = context.read<CountdownCubit>();
+    if (countdownCubit.isCountingDown) return; // disable taps during countdown
+
     final timerCubit = context.read<TimerCubit>();
     if (timerCubit.isRunning && timerCubit.state > 0) {
       final tapCubit = context.read<TapCubit>();
       tapCubit.onTap();
 
-      // animate the tap counter
       _tapAnimationController.forward().then(
         (_) => _tapAnimationController.reverse(),
       );
 
-      // play confetti every 5 taps
       if (tapCubit.state % 5 == 0) {
         _confettiController.play();
       }
     }
   }
 
-  // Custom heart shape
   Path _drawHeart(Size size) {
     final path = Path();
     path.moveTo(size.width / 2, size.height / 4);
@@ -81,6 +84,13 @@ class _TapViewPageState extends State<TapViewPage>
     );
     path.close();
     return path;
+  }
+
+  void _restartSession() {
+    context.read<CountdownCubit>().startCountdown(3).then((_) {
+      context.read<TapCubit>().resetTaps();
+      context.read<TimerCubit>().startTimer();
+    });
   }
 
   @override
@@ -127,19 +137,27 @@ class _TapViewPageState extends State<TapViewPage>
                           ScaleTransition(
                             scale: _tapAnimation,
                             child: BlocBuilder<TapCubit, int>(
-                              builder: (context, state) => AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 200),
-                                transitionBuilder: (child, animation) =>
-                                    ScaleTransition(
-                                      scale: animation,
-                                      child: child,
-                                    ),
-                                child: Text(
-                                  '$state',
-                                  key: ValueKey<int>(state),
-                                  style: textTheme.displayLarge,
-                                ),
-                              ),
+                              builder: (context, taps) {
+                                final timer = context.read<TimerCubit>().state;
+                                debugPrint("$timer");
+                                final sessionCompleted = (timer < 1);
+
+                                return AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 200),
+                                  transitionBuilder: (child, animation) =>
+                                      ScaleTransition(
+                                        scale: animation,
+                                        child: child,
+                                      ),
+                                  child: sessionCompleted == true
+                                      ? Text('Your Score: $taps')
+                                      : Text(
+                                          '$taps',
+                                          key: ValueKey<int>(taps),
+                                          style: textTheme.displayLarge,
+                                        ),
+                                );
+                              },
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -149,9 +167,9 @@ class _TapViewPageState extends State<TapViewPage>
                           ),
                           const SizedBox(height: 32),
                           BlocBuilder<TimerCubit, int>(
-                            builder: (context, state) {
+                            builder: (context, timer) {
                               final progress =
-                                  state /
+                                  timer /
                                   context.read<TimerCubit>().originalTime;
                               return Stack(
                                 alignment: Alignment.center,
@@ -164,30 +182,26 @@ class _TapViewPageState extends State<TapViewPage>
                                       strokeWidth: 8,
                                     ),
                                   ),
-                                  Text(
-                                    '$state',
-                                    style: textTheme.displayMedium,
-                                  ),
+                                  (progress == 0)
+                                      ? Text(
+                                          'Time UP!!!',
+                                          style: textTheme.displayMedium,
+                                        )
+                                      : Text(
+                                          '$timer',
+                                          style: textTheme.displayMedium,
+                                        ),
                                 ],
                               );
                             },
                           ),
                           const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.play_arrow),
-                                onPressed: () {
-                                  final timerCubit = context.read<TimerCubit>();
-                                  final tapCubit = context.read<TapCubit>();
-                                  tapCubit.resetTaps();
-                                  timerCubit.startTimer();
-                                },
-                              ),
-                              const SizedBox(width: 8),
-                              Text('Tap to start', style: textTheme.bodyLarge),
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: ElevatedButton(
+                              onPressed: _restartSession,
+                              child: const Text('Restart'),
+                            ),
                           ),
                         ],
                       ),
@@ -195,13 +209,31 @@ class _TapViewPageState extends State<TapViewPage>
                   ),
                 ),
               ),
-
-              // ✅ CHANGED: Removed BottomNavBar from here
-              // SizedBox(height: 80, child: BottomNavBar()),
             ],
           ),
 
-          // Confetti hearts overlay
+          // Countdown overlay
+          BlocBuilder<CountdownCubit, int?>(
+            builder: (context, countdown) {
+              if (countdown == null || countdown <= 0)
+                return const SizedBox.shrink();
+              return Container(
+                color: Colors.black.withOpacity(0.7),
+                child: Center(
+                  child: Text(
+                    '$countdown',
+                    style: textTheme.displayLarge?.copyWith(
+                      color: Colors.white,
+                      fontSize: 80,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          // Confetti overlay
           Align(
             alignment: Alignment.topCenter,
             child: ConfettiWidget(

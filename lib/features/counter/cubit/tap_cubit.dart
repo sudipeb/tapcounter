@@ -37,7 +37,7 @@ class TapCubit extends Cubit<int> {
       'Session saved: ${session.totalTaps} taps, ${session.totalTime}s',
     );
 
-    emit(0); // Reset tap count after saving
+    emit(state); // Reset tap count after saving
   }
 }
 
