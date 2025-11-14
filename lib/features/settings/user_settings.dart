@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tapcounter/features/userprofile/data/models/user_model.dart';
 import 'package:tapcounter/features/userprofile/data/presentation/cubit/user_cubit.dart';
+import 'package:tapcounter/features/userprofile/data/presentation/screens/user_input.dart';
 
 @RoutePage()
+///for showing the [User] data ibput from [UserInputPage]
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
