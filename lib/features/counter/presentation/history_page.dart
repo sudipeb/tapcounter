@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:tapcounter/app_route.gr.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/data/models/tap_session_model.dart';
 
@@ -14,10 +13,7 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Performance History'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => context.router.push(TapViewRoute()),
-        ),
+
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete),

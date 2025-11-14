@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:confetti/confetti.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
-import 'package:tapcounter/features/widgets/bottom_nav_bar.dart';
 
 @RoutePage()
 class TapViewPage extends StatefulWidget {
@@ -196,7 +195,9 @@ class _TapViewPageState extends State<TapViewPage>
                   ),
                 ),
               ),
-              SizedBox(height: 80, child: BottomNavBar()),
+
+              // ✅ CHANGED: Removed BottomNavBar from here
+              // SizedBox(height: 80, child: BottomNavBar()),
             ],
           ),
 
