@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tapcounter/app_route.dart';
 import 'package:tapcounter/core/app_theme.dart';
+import 'package:tapcounter/features/counter/cubit/count_down.dart';
 import 'package:tapcounter/features/counter/cubit/nav_bar_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/tap_cubit.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ToggleCubit()),
         BlocProvider.value(value: timerCubit), // reuse the same instance
         BlocProvider(create: (_) => UserCubit()),
-        BlocProvider(create: (_) => UserCubit()),
+        BlocProvider(create: (_) => CountdownCubit()),
       ],
       child: BlocBuilder<ToggleCubit, ThemeMode>(
         builder: (context, thememode) {
