@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:tapcounter/features/counter/cubit/timer_cubit.dart';
 import 'package:tapcounter/features/counter/data/models/tap_session_model.dart';
+import 'package:tapcounter/features/counter/presentation/tap_view.dart';
 
-///A [Cubit] which manages [int] as its state
+///A [Cubit] which manages [int] as its state and Handles tap in[TapViewPage]
 class TapCubit extends Cubit<int> {
   TapCubit({required this.timerCubit}) : super(0);
   final TimerCubit timerCubit;

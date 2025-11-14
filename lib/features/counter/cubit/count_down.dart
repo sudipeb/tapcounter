@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:tapcounter/features/counter/presentation/tap_view.dart';
 
+///for  managing the state for[isCountingDown] in [TapViewPage]
 class CountdownCubit extends Cubit<int?> {
   CountdownCubit() : super(null); // null means no countdown active
 

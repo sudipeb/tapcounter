@@ -1,8 +1,9 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:tapcounter/features/counter/presentation/tap_view.dart';
 
+///Timer Cubit to manage the time in [TapViewPage]
 class TimerCubit extends Cubit<int> {
   Timer? _timer;
   final int initialTime;
