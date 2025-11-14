@@ -57,7 +57,7 @@ class _TapViewPageState extends State<TapViewPage>
         (_) => _tapAnimationController.reverse(),
       );
 
-      if (tapCubit.state % 5 == 0) {
+      if (tapCubit.state % 100 == 0) {
         _confettiController.play();
       }
     }
@@ -143,7 +143,8 @@ class _TapViewPageState extends State<TapViewPage>
                               builder: (context, taps) {
                                 final timer = context.read<TimerCubit>().state;
                                 debugPrint("$timer");
-                                final sessionCompleted = (timer < 1);
+                                final sessionCompleted = (timer == 1);
+                                print('$sessionCompleted');
 
                                 return AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 200),
@@ -153,13 +154,20 @@ class _TapViewPageState extends State<TapViewPage>
                                         child: child,
                                       ),
                                   child: sessionCompleted == true
-                                      ? Text(
-                                          'Your Score: $taps',
-                                          style: textTheme.displayLarge,
+                                      ? FutureBuilder(
+                                          future: Future.delayed(
+                                            const Duration(seconds: 1),
+                                          ),
+                                          builder: (context, snapshot) => Text(
+                                            snapshot.connectionState ==
+                                                    ConnectionState.done
+                                                ? 'Your Score: $taps'
+                                                : '$taps',
+                                            style: textTheme.displayLarge,
+                                          ),
                                         )
                                       : Text(
                                           '$taps',
-                                          key: ValueKey<int>(taps),
                                           style: textTheme.displayLarge,
                                         ),
                                 );
@@ -180,13 +188,17 @@ class _TapViewPageState extends State<TapViewPage>
                               return Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  SizedBox(
-                                    width: 80,
-                                    height: 80,
-                                    child: CircularProgressIndicator(
-                                      value: progress,
-                                      strokeWidth: 8,
-                                    ),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 80,
+                                        height: 80,
+                                        child: CircularProgressIndicator(
+                                          value: progress,
+                                          strokeWidth: 8,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   (progress == 0)
                                       ? Text(
@@ -257,7 +269,7 @@ class _TapViewPageState extends State<TapViewPage>
                 Colors.yellow,
               ],
               numberOfParticles: 200,
-              gravity: 0.5,
+              gravity: 0.3,
               createParticlePath: _drawHeart,
             ),
           ),

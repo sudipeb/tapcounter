@@ -11,15 +11,17 @@ class TimerCubit extends Cubit<int> {
   VoidCallback? onTimerEnd;
   TimerCubit({required this.initialTime}) : super(30);
   void startTimer() {
-    _timer?.cancel(); // cancel previous timer if any
+    _timer?.cancel();
     emit(initialTime);
     isRunning = true;
+
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (state > 0) {
-        emit(state - 1);
+      if (state > 1) {
+        emit(state - 1); // normal countdown
       } else {
-        emit(state);
-        debugPrint('$state');
+        // final tick: emit 0 exactly once
+        emit(0);
+        debugPrint('Timer ended at 0');
         isRunning = false;
         timer.cancel();
         onTimerEnd?.call();
