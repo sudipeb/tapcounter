@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 
+/// placeholder for [User] with basic profile information.
 class User {
   final String id;
   final String name;
@@ -15,6 +16,7 @@ class User {
   });
 }
 
+/// Custom Hive TypeAdapter for the User class.
 class UserAdapter extends TypeAdapter<User> {
   @override
   final int typeId = 1;
