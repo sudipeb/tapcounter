@@ -2,13 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
-import 'package:tapcounter/app_route.gr.dart';
 import 'package:tapcounter/features/counter/cubit/nav_bar_cubit.dart';
 import 'package:tapcounter/features/counter/presentation/history_page.dart';
 import 'package:tapcounter/features/counter/presentation/tap_view.dart';
 import 'package:tapcounter/features/settings/user_settings.dart';
 
 @RoutePage()
+///creating [BottomNavBarPage] using the [PersistentTabController]
 class BottomNavBarPage extends StatelessWidget {
   BottomNavBarPage({super.key});
   final PersistentTabController _controller = PersistentTabController(
