@@ -66,6 +66,8 @@ class _TapViewPageState extends State<TapViewPage>
   Path _drawHeart(Size size) {
     final path = Path();
     path.moveTo(size.width / 2, size.height / 4);
+
+    ///Adds a cubic bezier segment that curves from the current point to the given point (x3,y3), using the control points (x1,y1) and (x2,y2).
     path.cubicTo(
       size.width * 5 / 14,
       0,
@@ -88,6 +90,7 @@ class _TapViewPageState extends State<TapViewPage>
 
   void _restartSession() {
     context.read<CountdownCubit>().startCountdown(3).then((_) {
+      if (!mounted) return;
       context.read<TapCubit>().resetTaps();
       context.read<TimerCubit>().startTimer();
     });
