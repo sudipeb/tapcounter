@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:tapcounter/features/userprofile/data/models/user_model.dart';
 
+///[UserCubit] creation using the [User] class
+///
+///performs [createUser],[loadCurrentUser],[updateUser] tasks
+
 class UserCubit extends Cubit<User?> {
   UserCubit() : super(null);
   final Box<User> _userBox = Hive.box<User>('user_profile');
