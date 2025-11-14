@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 
+///records the [TapSession]where taps in given time, total time and data time of that tap
 class TapSession {
   final int totalTaps;
   final int totalTime;
@@ -11,6 +12,7 @@ class TapSession {
   });
 }
 
+///[TypeAdapter] for [TapSession]
 class TapSessionAdapter extends TypeAdapter<TapSession> {
   @override
   final int typeId = 0;
