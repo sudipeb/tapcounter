@@ -4,6 +4,8 @@ import 'package:tapcounter/core/device_info.dart';
 import 'package:tapcounter/features/splash/cubit/splash_state.dart';
 import 'package:tapcounter/features/userprofile/data/models/user_model.dart';
 
+///splash cubit that uses [SplashState]
+///
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashInitial());
 
@@ -23,7 +25,7 @@ class SplashCubit extends Cubit<SplashState> {
     } else if (userBox.isNotEmpty) {
       emit(SplashNavigateToHome());
     } else {
-      //USER NOT 
+      //USER NOT
       emit(SplashNavigateToRegistration());
     }
   }

@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-
+// Base state class for the Splash screen.
+///
+/// Uses [Equatable] to enable value comparison, making Bloc updates efficient.
 abstract class SplashState extends Equatable {
   const SplashState();
 
